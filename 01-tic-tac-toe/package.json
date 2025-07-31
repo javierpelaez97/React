@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "canvas": "^3.1.2",
+    "canvas-confetti": "^1.9.3",
+    "confetti": "^2.0.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

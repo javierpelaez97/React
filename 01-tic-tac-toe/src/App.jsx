@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import confetti from "canvas-confetti"
 const TURNS = {
   X: "X",
   O: "O",
@@ -50,6 +50,12 @@ function App() {
     return null;
   };
 
+  const checkEndGame=(newBoard) => {
+
+    //Si todas las posiciones del array square son diferentes a null y no hya ganador
+    return newBoard.every((square)=> square !== null)
+  }
+
   const updateBoard = (index) => {
     if (board[index] || winner) return;       // Inidicamos que si el board tiene algo no lo pintamos ni hacemos nada de nuevo
     /* Creamos un nuevo tablero recogemos el inidce de la posicion y le indicamos el turno que estamos */
@@ -62,22 +68,28 @@ function App() {
 
     const newWinner = checkWinner(newBoard);
     if (newWinner) {
-      setWinner(()=>{
-        return newWinner
-      })
-      alert(`Ela ganador es ${winner}`)
-      
+      confetti()
+      setWinner(newWinner)
+    }else if(checkEndGame(newBoard)){
+      setWinner(false)
     }
   };
+  /* Para poder reiniciar un componente es resetear sus valores a los de origen */
+  const reloadGame = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setWinner(null)
+  }
 
   return (
     <main className="board">
       <h1>Tic tac toe</h1>
+      <button onClick={reloadGame}>Resetear Juego</button>
       <section className="game">
-        {board.map((_, index) => {
+        {board.map((square, index) => {
           return (
             <Square key={index} index={index} updateBoard={updateBoard}>
-              {board[index]}
+              {square}
             </Square>
           );
         })}
@@ -86,6 +98,27 @@ function App() {
         <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
+
+      {
+        winner !== null && (
+          <section className="winner">
+            <div className="text">
+              <h2>
+                  {
+                    winner === false ? 'Empate' : 'Ganó:'
+                  }
+              </h2>
+              <header className="win">
+                {winner && <Square>{winner}</Square>} 
+              </header>
+
+              <footer>
+                <button onClick={reloadGame}>Empezar de nuevo</button>
+              </footer>
+            </div>
+          </section>
+        )
+      }
     </main>
   );
 }
