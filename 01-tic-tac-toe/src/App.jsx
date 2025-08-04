@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useState} from "react";
 import confetti from "canvas-confetti"
 import {Square} from "./components/Square.jsx";
 import {TURNS} from "./constants"
 import { checkWinner } from "./logic/board.js";
 import {WinnerModal} from "./components/WinnerModal.jsx";
+import { saveGameToStorage, reloadGameStorage } from "./logic/storage/index.js";
+
 
 function App() {
-  const [board, setBoard] = useState(Array(9).fill(null));
 
-  const [turn, setTurn] = useState(TURNS.X); // Es un hook que determina un estado al inicio de la aplicacion. Crea un array de dos posiciones
+  // Esta muy mal hecho esto 
+  const [board, setBoard] = useState(() =>{
+    
+    const boardFromStare = window.localStorage.getItem('board')
+    return boardFromStare ? JSON.parse(boardFromStare) : Array(9).fill(null)}
+);
+
+  const [turn, setTurn] = useState(()=>{
+    const turnFormStorage = window.localStorage.getItem('turn')
+    return turnFormStorage ?? TURNS.X
+
+  }); // Es un hook que determina un estado al inicio de la aplicacion. Crea un array de dos posiciones
 
   const [winner, setWinner] = useState(null);
 
@@ -20,6 +32,8 @@ function App() {
     return newBoard.every((square)=> square !== null)
   }
 
+  
+
   const updateBoard = (index) => {
     if (board[index] || winner) return;       // Inidicamos que si el board tiene algo no lo pintamos ni hacemos nada de nuevo
     /* Creamos un nuevo tablero recogemos el inidce de la posicion y le indicamos el turno que estamos */
@@ -29,7 +43,12 @@ function App() {
 
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
-
+    //Guardar la partida
+    saveGameToStorage({
+      board: newBoard,
+      turn : newTurn
+    })
+    //Revisar si hay un ganados
     const newWinner = checkWinner(newBoard);
     if (newWinner) {
       confetti()
@@ -43,6 +62,8 @@ function App() {
     setBoard(Array(9).fill(null))
     setTurn(TURNS.X)
     setWinner(null)
+    
+    reloadGameStorage()
   }
 
   return (
