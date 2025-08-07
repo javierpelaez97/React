@@ -1,0 +1,17 @@
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+}
+
+section{
+    display: flex;   
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+section img{
+    max-width: 20rem;
+}
