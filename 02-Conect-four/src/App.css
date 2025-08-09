@@ -1,0 +1,76 @@
+/* Contenedor del juego */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Título */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+/* Tablero */
+.board {
+  display: grid;
+  grid-template-columns: repeat(7, 80px);
+  grid-template-rows: repeat(6, 80px);
+  gap: 5px;
+  background-color: #004080;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* Casillas */
+.cell {
+  width: 80px;
+  height: 80px;
+  background-color: #1a1a1a;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.cell:hover {
+  transform: scale(1.1);
+}
+
+/* Fichas */
+.disc {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  
+}
+
+.disc.red {
+  background-color: #ff4d4d;
+  
+}
+
+.disc.yellow {
+  background-color: #ffeb3b;
+}
+
+/* Botón reset */
+.reset-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ff9800;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.reset-btn:hover {
+  background-color: #e68900;
+}
