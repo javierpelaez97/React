@@ -3,17 +3,24 @@ import { useState } from 'react'
 import './App.css'
 import { Cell } from './components/cell'
 import { turns } from './constants' 
-import { checkWinner } from '../logic/board'
+import { checkWinner } from './logic/board'
 import confetti from 'canvas-confetti'
 import { WinnerModal } from './components/WinnerModal'
+import { reloadGameStorage, saveGameToStorage } from './logic/storage'
 
 
 
 function App() {
 
-  const [board, setBoard] = useState(Array(42).fill(null))
+  const [board, setBoard] = useState(()=>{
+    const boardFromStorage = window.localStorage.getItem('board')
+    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(42).fill(null)
+  })
 
-  const [turn, setTurn] = useState(turns.Yellow)
+  const [turn, setTurn] = useState(()=>{
+    const turnFormStorage = window.localStorage.getItem('turn')
+    return turnFormStorage ?? turns.Yellow
+  })
 
   const [winner, setWinner] = useState(null)
 
@@ -27,6 +34,14 @@ function App() {
 
     const column = index % 7
     const newBoard = [...board]
+
+    const newTurn = turn === turns.Yellow? turns.Red : turns.Yellow
+    setTurn(newTurn)
+
+    saveGameToStorage({
+      board: newBoard,
+      turn: newTurn
+    }) 
 
     for (let row = 5; row>= 0; row --){
       const cellIndex = row * 7 + column
@@ -49,15 +64,13 @@ function App() {
     }
 
 
-    const newTurn = turn === turns.Yellow? turns.Red : turns.Yellow
-    setTurn(newTurn)
-
-
   }
   const resetGame = () =>{
     setBoard (Array(42).fill(null))
     setTurn (turns.Yellow)
     setWinner(null)
+
+    reloadGameStorage
   }
   
   
