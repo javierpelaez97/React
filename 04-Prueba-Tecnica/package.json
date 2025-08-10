@@ -9,14 +9,17 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.2.1",
     "vite": "^7.0.4"
   },
   "dependencies": {
     "@vitejs/plugin-react": "4.7.0",
+    "playwright": "^1.54.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
-    "eslintConfig": {
-      "extends": "./node_modules/srandard/eslintrc.json"
-    }
+  "eslintConfig": {
+    "extends": "./node_modules/srandard/eslintrc.json"
+  }
 }
