@@ -1,12 +1,38 @@
-# React + Vite
+Requisitos
+1-Vista principal con:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+    Lista de tareas obtenidas desde una API falsa (https://jsonplaceholder.typicode.com/users/1/todos).
 
-Currently, two official plugins are available:
+    Botón para añadir una tarea.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    Botón para marcar tareas como completadas.
 
-## Expanding the ESLint configuration
+    Botón para eliminar tareas.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2-Formulario de nueva tarea:
+
+    Input para el título.
+
+    Botón de guardar.
+
+    Validación (no permitir título vacío).
+
+3-Lógica con Hooks de React:
+
+    useState para manejar el estado de las tareas y los inputs.
+
+    useEffect para cargar las tareas desde la API al iniciar.
+
+    useReducer para manejar el estado de las tareas (añadir, eliminar, actualizar).
+
+    Custom Hook para gestionar la API (useFetch para GET/POST/DELETE).
+
+4-Extras opcionales (si quieres más reto):
+
+    Filtro para mostrar solo tareas completadas / pendientes.
+
+    Contador de tareas pendientes (puedes usar useMemo).
+
+    Manejar estados de carga y error con useFetch.
+
+    Guardar el estado en localStorage con otro custom hook (useLocalStorage).
